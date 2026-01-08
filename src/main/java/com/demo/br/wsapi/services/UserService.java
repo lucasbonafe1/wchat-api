@@ -17,12 +17,12 @@ public class UserService {
 
     public User register(String username) {
         Optional<User> userExistent = getByUsername(username);
-        User user = new User(username);
 
-        if (userExistent.isPresent()){ // retirar ao implementar login corretamente
-            return user;
+        if (userExistent.isPresent()){ // retirar ao implementar login jwt
+            return userExistent.get();
         }
 
+        User user = new User(username);
         return repository.save(user);
     }
 
