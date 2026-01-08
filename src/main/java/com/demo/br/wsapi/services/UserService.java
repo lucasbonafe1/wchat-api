@@ -16,7 +16,13 @@ public class UserService {
     }
 
     public User register(String username) {
+        Optional<User> userExistent = getByUsername(username);
         User user = new User(username);
+
+        if (userExistent.isPresent()){ // retirar ao implementar login corretamente
+            return user;
+        }
+
         return repository.save(user);
     }
 
