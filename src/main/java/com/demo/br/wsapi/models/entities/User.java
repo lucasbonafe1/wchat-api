@@ -12,13 +12,10 @@ import java.util.UUID;
 @NoArgsConstructor
 @Entity
 @Table(name = "users")
-public class User {
+public class User{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(nullable = false, unique = true)
-    private String key;
 
     @Column(nullable = false, unique = true)
     private String username;
@@ -26,9 +23,16 @@ public class User {
     @Column(nullable = false)
     private String normalizedUsername;
 
-    public User(String username) {
-        this.key = UUID.randomUUID().toString();
+    @Column(nullable = false, unique = true)
+    private String email;
+
+    @Column(nullable = false, unique = true)
+    private String password;
+
+    public User(String username, String normalizedUsername, String email, String password) {
         this.username = username;
-        this.normalizedUsername = username.toLowerCase().trim();
+        this.normalizedUsername = normalizedUsername;
+        this.email = email;
+        this.password = password;
     }
 }

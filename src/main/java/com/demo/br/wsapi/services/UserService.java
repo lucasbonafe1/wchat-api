@@ -1,7 +1,12 @@
 package com.demo.br.wsapi.services;
 
+import com.demo.br.wsapi.models.dtos.LoginDTO;
+import com.demo.br.wsapi.models.dtos.RegisterDTO;
 import com.demo.br.wsapi.models.entities.User;
 import com.demo.br.wsapi.repositories.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,28 +14,14 @@ import java.util.Optional;
 
 @Service
 public class UserService {
-    private final UserRepository repository;
-
-    public UserService(UserRepository repository) {
-        this.repository = repository;
-    }
-
-    public User register(String username) {
-        Optional<User> userExistent = getByUsername(username);
-
-        if (userExistent.isPresent()){ // retirar ao implementar login jwt
-            return userExistent.get();
-        }
-
-        User user = new User(username);
-        return repository.save(user);
-    }
+    @Autowired
+    private UserRepository repository;
 
     public List<User> getUsers() {
         return repository.findAll();
     }
 
-    public Optional<User> getByUsername(String username) {
-        return repository.findByNormalizedUsername(username.toLowerCase().trim());
+    public Optional<User> getUserById(Long id) {
+        return repository.findById(id);
     }
 }

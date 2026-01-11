@@ -1,6 +1,7 @@
 package com.demo.br.wsapi.repositories;
 
 import com.demo.br.wsapi.models.entities.User;
+import jakarta.persistence.Column;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -8,5 +9,5 @@ import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    Optional<User> findByNormalizedUsername(String normalizedUsername);
+    Optional<User> findByEmail(String email);
 }

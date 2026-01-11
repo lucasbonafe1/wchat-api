@@ -1,5 +1,6 @@
 package com.demo.br.wsapi.controllers;
 
+import com.demo.br.wsapi.models.dtos.RegisterDTO;
 import com.demo.br.wsapi.models.entities.User;
 import com.demo.br.wsapi.services.UserService;
 import org.springframework.http.HttpStatus;
@@ -17,20 +18,14 @@ public class UserController {
         this.service = service;
     }
 
-    @PostMapping
-    public ResponseEntity<User> register(@RequestParam String username) {
-        User user = service.register(username);
-        return ResponseEntity.status(HttpStatus.CREATED).body(user);
-    }
-
     @GetMapping
     public ResponseEntity<List<User>> getUsers() {
         return ResponseEntity.ok(service.getUsers());
     }
 
-    @GetMapping("/{username}")
-    public ResponseEntity<User> getByUsername(@PathVariable String username) {
-        return service.getByUsername(username)
+    @GetMapping("/{id}")
+    public ResponseEntity<User> getByUsername(@PathVariable Long id) {
+        return service.getUserById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
